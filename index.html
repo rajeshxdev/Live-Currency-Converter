@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Currency Converter</title>
+
+
+    <style>
+        /* =========================
+      GLOBAL STYLING
+   ========================== */
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+
+
+            /* Background Gradient */
+            background: linear-gradient(135deg, #f5deb3, #ffe4b5, #f0c27b);
+            position: relative;
+        }
+
+
+        /* =========================
+      3D Background Rupee Design
+   ========================== */
+
+
+        .rupee {
+            position: absolute;
+            font-size: 120px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.12);
+            transform: rotate(-20deg);
+            animation: float 6s infinite ease-in-out;
+            user-select: none;
+        }
+
+
+        .rupee:nth-child(1) {
+            top: 10%;
+            left: 10%;
+        }
+
+
+        .rupee:nth-child(2) {
+            bottom: 15%;
+            right: 10%;
+            animation-delay: 2s;
+        }
+
+
+        .rupee:nth-child(3) {
+            top: 40%;
+            right: 30%;
+            animation-delay: 4s;
+        }
+
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px) rotate(-20deg);
+            }
+
+
+            50% {
+                transform: translateY(-20px) rotate(-10deg);
+            }
+
+
+            100% {
+                transform: translateY(0px) rotate(-20deg);
+            }
+        }
+
+
+        /* =========================
+      MAIN CONTAINER
+   ========================== */
+
+
+        .container {
+            width: 420px;
+            background: #121327;
+            padding: 35px;
+            border-radius: 25px;
+
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.4),
+                inset 0 0 10px rgba(255, 255, 255, 0.05);
+
+
+            z-index: 10;
+        }
+
+
+        .container h1 {
+            text-align: center;
+            color: #ffe8a3;
+            margin-bottom: 30px;
+            font-size: 42px;
+        }
+
+
+        /* =========================
+      DROPDOWN SECTION
+   ========================== */
+
+
+        .currency-box {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+
+        select {
+            flex: 1;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: #ff7f50;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            outline: none;
+            font-weight: bold;
+        }
+
+
+        /* =========================
+      INPUT SECTION
+   ========================== */
+
+
+        .input-box {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+
+        input {
+            flex: 1;
+            padding: 14px;
+            border-radius: 12px;
+            border: none;
+            outline: none;
+            font-size: 20px;
+            background: #ececec;
+        }
+
+
+        /* =========================
+      BUTTON DESIGN
+   ========================== */
+
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 15px;
+
+
+            background: #ffe8a3;
+            color: #222;
+            font-size: 22px;
+            font-weight: bold;
+            cursor: pointer;
+
+
+            transition: 0.3s;
+        }
+
+
+        button:hover {
+            transform: scale(1.03);
+            background: #ffd86b;
+        }
+
+
+        /* =========================
+      RESULT TEXT
+   ========================== */
+
+
+        .result {
+            text-align: center;
+            margin-top: 20px;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+
+        /* =========================
+      MOBILE RESPONSIVE
+   ========================== */
+
+
+        @media(max-width: 500px) {
+
+
+            .container {
+                width: 92%;
+                padding: 25px;
+            }
+
+
+            .currency-box,
+            .input-box {
+                flex-direction: column;
+            }
+
+
+            .container h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- 3D Background Rupee Symbols -->
+    <div class="rupee">₹</div>
+    <div class="rupee">₹</div>
+    <div class="rupee">₹</div>
+
+
+    <!-- Main Currency Converter Box -->
+    <div class="container">
+
+
+        <h1>Currency Converter</h1>
+
+
+        <!-- Currency Selection -->
+        <div class="currency-box">
+
+
+            <!-- From Currency -->
+            <select id="fromCurrency">
+                <option value="USD">USD</option>
+                <option value="INR">INR</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+                <option value="JPY">JPY</option>
+                <option value="AED">AED</option>
+            </select>
+
+
+            <!-- To Currency -->
+            <select id="toCurrency">
+                <option value="INR">INR</option>
+                <option value="USD">USD</option>
+                <option value="EUR">EUR</option>
+                <option value="GBP">GBP</option>
+                <option value="JPY">JPY</option>
+                <option value="AED">AED</option>
+            </select>
+
+
+        </div>
+
+
+        <!-- Amount Input -->
+        <div class="input-box">
+
+
+            <!-- User Input (✅ REMOVED value="100") -->
+            <input type="number" id="amount" placeholder="Enter Amount">
+
+
+            <!-- Converted Amount -->
+            <input type="text" id="resultAmount" placeholder="Converted Amount" readonly>
+
+
+        </div>
+
+
+        <!-- Convert Button -->
+        <button onclick="convertCurrency()">
+            Convert
+        </button>
+
+
+        <!-- Result Message -->
+        <div class="result" id="resultText">
+            Live Currency Exchange Rate
+        </div>
+
+
+    </div>
+
+
+    <script>
+        // Clear converted value when input is erased
+        document.getElementById("amount").addEventListener("input", function () {
+            const amount = this.value;
+            const resultAmount = document.getElementById("resultAmount");
+            const resultText = document.getElementById("resultText");
+
+            // If input is empty or 0, clear the converted value
+            if (amount === "" || amount <= 0) {
+                resultAmount.value = "";
+                resultText.innerHTML = "Live Currency Exchange Rate";
+            }
+        });
+
+
+        /* =====================================
+           REAL TIME CURRENCY CONVERTER
+           API USED: https://open.er-api.com
+        ====================================== */
+
+
+        async function convertCurrency() {
+
+
+            // Get selected currencies
+            const fromCurrency = document.getElementById("fromCurrency").value;
+            const toCurrency = document.getElementById("toCurrency").value;
+
+
+            // Get amount entered by user
+            const amount = document.getElementById("amount").value;
+
+
+            // Result input field
+            const resultAmount = document.getElementById("resultAmount");
+
+
+            // Result text
+            const resultText = document.getElementById("resultText");
+
+
+            // ✅ Validation kept (prevents errors)
+            if (amount === "" || amount <= 0) {
+                alert("Please enter valid amount");
+                return;
+            }
+
+
+            try {
+
+
+                const response = await fetch(
+                    `https://open.er-api.com/v6/latest/${fromCurrency}`
+                );
+
+
+                const data = await response.json();
+
+
+                const rate = data.rates[toCurrency];
+
+
+                const convertedValue = (amount * rate).toFixed(2);
+
+
+                resultAmount.value = convertedValue;
+
+
+                resultText.innerHTML =
+                    `${amount} ${fromCurrency} = ${convertedValue} ${toCurrency}`;
+
+
+            }
+            catch (error) {
+
+
+                console.log(error);
+
+
+                resultText.innerHTML =
+                    "Error fetching currency data";
+
+
+            }
+
+
+        }
+
+
+        // ✅ REMOVED: Auto convert on page load
+        // convertCurrency();  <-- This line was removed
+
+
+    </script>
+
+
+</body>
+
+
+</html>
